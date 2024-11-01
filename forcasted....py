@@ -41,12 +41,10 @@ for t in range(2017, 2024):
         past_years = list(range(t - tau - 9, t - tau + 1))  # 回溯年份範圍 t-z-9 到 t-z
         historical_data = []
 
-        # 輸出當前處理的年份以進行調試
         print(f"Processing year: {t}, tau: {tau}, past_years: {past_years}")
 
         for i in past_years:
             try:
-                # 嘗試提取過去年份的數據
                 X = result.xs(i, level=0, axis=1)[target_variables]
                 X['divdum'] = divdum[i]
                 X['negearn'] = negearn[i]
@@ -55,11 +53,9 @@ for t in range(2017, 2024):
                 model = sm.OLS(y, X).fit()
                 historical_data.append(model.params)
             except KeyError as e:
-                # 如果找不到年份，則輸出錯誤信息以供調試
                 print(f"KeyError for year {i}: {e}")
                 continue
             except Exception as e:
-                # 捕捉其他可能的異常
                 print(f"Exception for year {i}: {e}")
                 continue
 
